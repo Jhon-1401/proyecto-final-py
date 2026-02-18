@@ -16,4 +16,4 @@ class ProductosModelo(Base):
     stock_minimo = Column(Float)
     id_almacen = Column(Integer)
     fecha_creacion = Column(Date)
-    indicadorHabilitado = Column(Integer)  # 1 = habilitado, 0 = deshabilitado
+    indicador_habilitado = Column(Integer)  # 1 = habilitado, 0 = deshabilitado

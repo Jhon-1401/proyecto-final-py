@@ -10,7 +10,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 class ControladorProductoRepository():
     def __init__(self):
-        self.engine = db.create_engine('mysql+pymysql://proyectoinventario_easierbaby:9ba541562e0fa4efa6d4be650b0ba273db1359fb@07880.h.filess.io:61001/proyectoinventario_easierbaby', echo=True, future=True)
+        self.engine = db.create_engine('mysql+pymysql://root:@localhost:3306/proyectoinventario', echo=True, future=True)
 
     def register(self, producto: ProductosModelo):
         with Session(self.engine) as session:
@@ -31,7 +31,7 @@ class ControladorProductoRepository():
                 producto.precio_venta = producto_modificado.precio_venta
                 producto.id_almacen = producto_modificado.id_almacen
                 producto.fecha_creacion = producto_modificado.fecha_creacion
-                producto.indicadorHabilitado = True
+                producto.indicador_habilitado = True
                 # ... otros campos que quieras actualizar
                 session.commit()
 
@@ -50,14 +50,14 @@ class ControladorProductoRepository():
                     producto.precio_venta = producto_modificado.precio_venta
                     producto.id_almacen = producto_modificado.id_almacen
                     producto.fecha_creacion = producto_modificado.fecha_creacion
-                    producto.indicadorHabilitado = True
+                    producto.indicador_habilitado = True
             session.commit()  # Se hace solo UNA vez al final, para todos
                 
     def inhabilitar(self, _sku):
         with Session(self.engine) as session:
             producto = session.query(ProductosModelo).filter_by(sku=_sku).first()
             if producto:
-                producto.indicadorHabilitado = False
+                producto.indicador_habilitado = False
                 producto.fecha_creacion = datetime.now()
                 # ... otros campos que quieras actualizar
                 session.commit()            
@@ -75,7 +75,7 @@ class ControladorProductoRepository():
         def tarea():
             with Session(self.engine) as session:
                 return session.query(ProductosModelo)\
-                              .filter((ProductosModelo.indicadorHabilitado == True) & (ProductosModelo.stock_actual >= 1))\
+                              .filter((ProductosModelo.indicador_habilitado == True) & (ProductosModelo.stock_actual >= 1))\
                               .all()
 
         with ThreadPoolExecutor(max_workers=1) as executor:

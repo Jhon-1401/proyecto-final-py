@@ -98,7 +98,7 @@ class FormProductos(FormProductosVista):
             stock_minimo = stockMin,
             id_almacen = idalmacen,
             fecha_creacion = fechaCreacion,
-            indicadorHabilitado = 1 # 1 = habilitado, 0 = deshabilitado
+            indicador_habilitado = 1 # 1 = habilitado, 0 = deshabilitado
         )
         print("editando", self.editando)
         if self.editando:
@@ -164,7 +164,7 @@ class FormProductos(FormProductosVista):
                 productos.stock_actual,
                 productos.stock_minimo,
                 self.almacen_id_to_nombre.get(productos.id_almacen, "Desconocido"),
-                "SI" if productos.indicadorHabilitado == 1 else "NO",
+                "SI" if productos.indicador_habilitado == 1 else "NO",
                 "Editar"
                 ))
             
